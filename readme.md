@@ -1,68 +1,15 @@
-# Food Payments — Arquitetura de Microsserviços
+# Food Microservices
 
-Projeto pessoal desenvolvido com o objetivo de explorar, na prática, os conceitos de arquitetura de microsserviços utilizando o ecossistema Spring Boot.
+Projeto pessoal de desenvolvimento de uma aplicação de pedidos e pagamentos utilizando arquitetura de microsserviços.
 
-A proposta é evoluir uma aplicação inicialmente estruturada como monólito para uma arquitetura distribuída, separando responsabilidades em serviços independentes e explorando os desafios de comunicação, disponibilidade e escalabilidade.
+A ideia é explorar, na prática, como diferentes serviços podem trabalhar juntos de forma independente, utilizando tecnologias do ecossistema Spring.
 
-## Arquitetura
+**Tecnologias:** Java, Spring Boot, Spring Cloud, Eureka, MySQL e Resilience4J.
 
-A aplicação é organizada em microsserviços independentes, cada um responsável por uma parte do domínio de negócio.
+**O que estou desenvolvendo:**
+- Microsserviços de pedidos e pagamentos.
+- API Gateway e descoberta de serviços.
+- Comunicação entre serviços e balanceamento de carga.
+- Circuit Breaker e Fallback para tolerância a falhas.
 
-### Componentes
-
-- **Payment Service:** microsserviço responsável pelo processamento e gerenciamento de pagamentos, com banco de dados próprio (MySQL).
-- **Order Service:** microsserviço responsável pelo gerenciamento de pedidos e pela comunicação com o serviço de pagamentos.
-- **Service Discovery (Eureka):** responsável pelo registro e descoberta dinâmica das instâncias dos serviços.
-- **API Gateway:** ponto central de entrada das requisições, responsável pelo direcionamento do tráfego para os microsserviços.
-
-## Conceitos e tecnologias explorados
-
-- **Java e Spring Boot:** desenvolvimento dos microsserviços.
-- **Spring Cloud Netflix Eureka:** registro e descoberta de serviços.
-- **Spring Cloud Gateway:** gerenciamento e roteamento das requisições.
-- **MySQL:** persistência de dados, com banco independente para o serviço de pagamentos.
-- **Comunicação síncrona:** integração entre microsserviços por meio de requisições HTTP.
-- **Balanceamento de carga:** distribuição de requisições entre múltiplas instâncias de um serviço.
-- **Resilience4J:** implementação de Circuit Breaker e Fallback para lidar com falhas e indisponibilidade de serviços.
-
-## Objetivos do projeto
-
-- Compreender os desafios da decomposição de um monólito em microsserviços.
-- Aplicar o princípio de banco de dados por serviço.
-- Implementar mecanismos de descoberta e comunicação entre serviços.
-- Explorar escalabilidade horizontal por meio de múltiplas instâncias.
-- Implementar estratégias de tolerância a falhas.
-- Entender os benefícios e as complexidades de uma arquitetura distribuída.
-
-## Arquitetura proposta
-
-```text
-                 CLIENTE
-                    |
-                    v
-              API GATEWAY
-                    |
-          +---------+---------+
-          |                   |
-          v                   v
-    ORDER SERVICE       PAYMENT SERVICE
-          |                   |
-          |                   v
-          |              MYSQL DB
-          |
-          +---- Comunicação HTTP ----+
-                                     |
-                                     v
-                              EUREKA SERVER
-                         (Service Discovery)
-
-        RESILIENCE4J
-        Circuit Breaker / Fallback
-        aplicado nas chamadas entre serviços
-```
-
-## Status do projeto
-
-🚧 Em desenvolvimento.
-
-O projeto está sendo construído incrementalmente, com foco na implementação e compreensão dos principais conceitos de uma arquitetura baseada em microsserviços.
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/5107e916-e7c8-47f2-8a77-5f25c80e72eb" />
