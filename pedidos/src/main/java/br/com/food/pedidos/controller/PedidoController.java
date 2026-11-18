@@ -21,6 +21,7 @@ public class PedidoController {
         @Autowired
         private PedidoService service;
 
+
         @GetMapping()
         public List<PedidoDto> listarTodos() {
             return service.obterTodos();
