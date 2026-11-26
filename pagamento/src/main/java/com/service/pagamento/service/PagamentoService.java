@@ -54,4 +54,10 @@ public class PagamentoService {
         pagamento.setStatus(Status.CONFIRMADO);
         pedido.atualizaPagamento(pagamento.getPedidoId());
     }
+
+    @Transactional 
+    public void alterarStatus(Long id) {
+        Pagamento pagamento = repository.findById(id).orElseThrow(()-> new IllegalArgumentException("id não encontrado"+id));
+        pagamento.setStatus(Status.CONFIRMADO_SEM_INTEGRACAO);
+    }
 }
