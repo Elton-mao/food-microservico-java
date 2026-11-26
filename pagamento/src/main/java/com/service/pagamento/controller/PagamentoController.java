@@ -2,6 +2,8 @@ package com.service.pagamento.controller;
 
 import com.service.pagamento.dto.PagamentoDto;
 import com.service.pagamento.service.PagamentoService;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,7 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/pagametos")
+@RequestMapping("/pagamentos")
 public class PagamentoController {
 
     private final PagamentoService service;
@@ -50,6 +52,12 @@ public class PagamentoController {
     public ResponseEntity<PagamentoDto> deletar(@PathVariable @NotNull Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/confirmar")
+    @CircuitBreaker(name = "atualiza-pedido",fallbackMethod = "")
+    public void confirmarPagamento(@PathVariable @NotNull Long id){
+        service.confirmarPagamento(id);
     }
 
 }

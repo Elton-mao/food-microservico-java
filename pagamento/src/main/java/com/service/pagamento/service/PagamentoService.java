@@ -1,9 +1,14 @@
 package com.service.pagamento.service;
 
 import com.service.pagamento.dto.PagamentoDto;
+import com.service.pagamento.http.PedidoClient;
 import com.service.pagamento.model.Pagamento;
+import com.service.pagamento.model.Status;
 import com.service.pagamento.repository.PagamentoRepository;
+
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -15,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class PagamentoService {
     private final PagamentoRepository repository;
     private final ModelMapper mapper;
+    private final PedidoClient pedido;
 
     public Page<PagamentoDto> obterTodos(Pageable paginacao){
             return repository.findAll(paginacao)
@@ -40,5 +46,12 @@ public class PagamentoService {
     }
     public void deletar(Long id){
         repository.deleteById(id);
+    }
+
+    @Transactional 
+    public void confirmarPagamento(Long id){
+        Pagamento pagamento = repository.findById(id).orElseThrow(()-> new IllegalArgumentException("id não encontrado"+id));
+        pagamento.setStatus(Status.CONFIRMADO);
+        pedido.atualizaPagamento(pagamento.getPedidoId());
     }
 }
